@@ -21,4 +21,3 @@ sudo rm $DESDIR/$REMOVEFILE > /dev/null 2>&1                                    
 sudo systemctl start linbpq.service                                             # Start BPQ service
 #
 # Job's a goodun :)
-robin@BPQnode:~ $
