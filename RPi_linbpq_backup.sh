@@ -21,6 +21,6 @@ sudo systemctl stop linbpq.service                                              
 sudo tar -cpzf $DESDIR/$FILE $SRCDIR $BPQCFG  >> $DESDIR/bpq-backup.log 2>&1    # Compressed backup and log file appended
 sudo rm $DESDIR/$REMOVEFILE > /dev/null 2>&1                                    # Remove old files
 sudo systemctl start linbpq.service                                             # Start BPQ service
-sudo rclone sync $DESDIR $SYNCDIR                                                    # Rclone backup to cloud storage                                         
+rclone sync ~/bpq-backup onedrive:/Backups/LinBPQ --progress                                                  # Rclone backup to cloud storage                                         
 #
 # Job's a goodun :)
