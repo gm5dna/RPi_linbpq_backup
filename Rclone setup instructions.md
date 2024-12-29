@@ -1,4 +1,4 @@
-## **Setting Up Rclone on Debian to Sync ~/bpq-backup to OneDrive /Backups/LinBPQ**
+## **Setting Up Rclone on Debian to Sync `~/bpq-backup` to OneDrive `/Backups/LinBPQ`**
 
 ### **1. Install Rclone**
 
