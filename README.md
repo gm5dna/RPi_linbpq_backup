@@ -58,11 +58,4 @@ Check the output to ensure there are no errors.
 
 ---
 
-### Step 6: Monitor Cron Job Logs
-If the script doesn't execute as expected, check the cron logs for errors:
-
-```bash
-grep CRON /var/log/syslog
-```
-
 You're all set! The script will now run daily at 1 AM.
