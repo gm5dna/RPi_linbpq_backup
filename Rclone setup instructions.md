@@ -81,32 +81,9 @@ This command will:
 
 - Copy all files from `~/bpq-backup` to `/Backups/LinBPQ` on OneDrive.
 - If the `/Backups/LinBPQ` folder does not exist on OneDrive, Rclone will create it automatically.
-
 ---
 
-### **4. Automate the Sync Process with Cron**
-
-To run the sync automatically, you can set up a cron job.
-
-#### **Create a Cron Job**:
-
-Open the crontab editor:
-
-```bash
-crontab -e
-```
-
-Add the following line to run the sync every day at midnight:
-
-```bash
-0 0 * * * rclone sync ~/bpq-backup onedrive:/Backups/LinBPQ
-```
-
-This cron job will execute the sync process daily at midnight.
-
----
-
-### **5. Verify the Sync (Optional)**
+### **4. Verify the Sync (Optional)**
 
 To check if the sync worked, list the contents of the `/Backups/LinBPQ` directory on OneDrive:
 
