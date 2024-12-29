@@ -13,7 +13,7 @@ sudo apt install rclone
 
 ### **2. Configure Rclone for OneDrive**
 
-If you're logged into the GUI of your RPI with access to a browser, then follow the [Interactive Configuration](#interactive-configuration-with-a-browser) instuructions below. Otherwise, skip down to the instructions for [Headless Configuration](#headless-configuration-without-a-browser).
+If you're logged into the desktop of your machine with access to a browser, then follow the [Interactive Configuration](#interactive-configuration-with-a-browser) instuructions below. Otherwise, skip down to the instructions for [Headless Configuration](#headless-configuration-without-a-browser).
 
 #### **Interactive Configuration (with a browser)**
 
