@@ -1,40 +1,88 @@
 #!/bin/bash
 
-# Variables
-DESDIR=~/bpq-backup                       # Local backup destination directory
-LOGFILE=$DESDIR/bpq-backup.log            # Log file location
-CLOUD_TARGET=onedrive:/Backups/LinBPQ     # Cloud backup target (default: OneDrive)
-RETENTION_DAYS=10                         # Number of days to retain backups
-SRCDIR=/opt/oarc/bpq/                     # Source directory for backup
-BPQCFG=/etc/bpq32.cfg                     # Configuration file for backup
-DATESHORT=$(date +%Y%m%d)                  # Current date in YYYYMMDD format
-REMOVEDATE=$(date --date="10 days ago" +%Y%m%d) # Date for cleanup
-FILE=bpq$DATESHORT.tar.gz                  # Backup file name
-REMOVEFILE=bpq$REMOVEDATE.tar.gz           # File name to remove
+# This script was adapted from one by Robin (M0JQQ) and performs a backup of LinBPQ, 
+# removes old backups (keeping only the last 10 backups), and optionally syncs the backups 
+# to cloud storage (using rclone). It also ensures that the backup process is logged and 
+# that the BPQ service is properly stopped and restarted during the backup.
 
-# Logging function
+# You will need to modify some of the variables (typically DESDIR and CLOUD_TARGET) to 
+# suit your personal circumstances.
+
+# Once set up, schedule the script to run daily using `crontab -e` and add a line similar 
+# to this to run the script daily at 0100 hrs: 
+# `0 1 * * * /bin/bash ~/RPi_linbpq_backup/RPi_linbpq_backup.sh`
+
+# Set up
+set -e  # Exit immediately if any command exits with a non-zero status.
+
+# Variables:
+# DESDIR: The destination directory where backups will be stored (could be an SMB share)
+# LOGFILE: The location of the log file that records the backup process.
+# CLOUD_TARGET: The target location for cloud backup using rclone
+# RETENTION_COUNT: The number of backups to retain (default: 10 backups).
+# SRCDIR: The source directory that contains the files to be backed up.
+# BPQCFG: The LinBPQ configuration file (bpq32.cfg) to be included in the backup.
+# FILE: The name of the backup file to be created, based on the current date and time (YYYYMMDD_HHMMSS).
+
+DESDIR=~/bpq-backup
+LOGFILE=$DESDIR/bpq-backup.log
+CLOUD_TARGET=onedrive:/Backups/LinBPQ
+RETENTION_COUNT=10
+SRCDIR=/opt/oarc/bpq/
+BPQCFG=/etc/bpq32.cfg
+FILE=bpq_$(date +%Y%m%d_%H%M%S).tar.gz
+
+# Logging function to write log messages with timestamps to the log file
 log() {
     echo "$(date +'%Y-%m-%d %H:%M:%S') $1" >> $LOGFILE
 }
 
+# Ensure destination directory exists (create if it doesn't exist)
+mkdir -p $DESDIR || { log "Failed to create backup directory $DESDIR"; exit 1; }
+
 log "Starting backup process."
 
-# Stop BPQ service
-sudo systemctl stop linbpq.service || { log "Failed to stop linbpq.service"; exit 1; }
+# Check available disk space in the destination directory (ensure at least 512MB free)
+AVAILABLE_SPACE=$(df $DESDIR | awk 'NR==2 {print $4}')
+if (( AVAILABLE_SPACE < 512 )); then
+    log "Insufficient disk space for backup. Exiting."
+    exit 1
+fi
 
-# Create backup
-sudo tar --transform='s,^/,,' --exclude='*.sock' -cpzf $DESDIR/$FILE $SRCDIR $BPQCFG || { log "Backup failed"; exit 1; }
+# Stop the BPQ service before creating the backup to ensure consistency
+log "Stopping BPQ service."
+if sudo systemctl stop linbpq.service; then
+    log "BPQ service stopped successfully."
+else
+    log "Failed to stop BPQ service, exiting."
+    exit 1
+fi
 
-# Delete old backups
-sudo rm $DESDIR/$REMOVEFILE > /dev/null 2>&1 && log "Deleted old backup: $REMOVEFILE"
+# Create the backup by archiving the source directory and configuration file
+log "Creating backup."
+sudo tar --exclude='*.sock' -caf $DESDIR/$FILE $SRCDIR $BPQCFG || { log "Backup failed"; exit 1; }
 
-# Restart BPQ service
-sudo systemctl start linbpq.service || log "Failed to start linbpq.service"
+# Delete backups exceeding the retention count (keep only the last 10 backups)
+log "Deleting backups beyond the last $RETENTION_COUNT backups."
+ls -1t $DESDIR/bpq*.tar.gz | tail -n +$((RETENTION_COUNT + 1)) | xargs rm -f && log "Old backups deleted successfully."
 
-# Sync to cloud (optional)
+# Restart the BPQ service after the backup is completed
+log "Restarting BPQ service."
+if sudo systemctl start linbpq.service; then
+    log "BPQ service started successfully."
+else
+    log "Failed to start BPQ service"
+fi
+
+# Sync the backup directory to cloud storage if rclone is installed
 if command -v rclone &> /dev/null; then
-    rclone sync $DESDIR $CLOUD_TARGET --progress || log "Rclone sync failed"
-    log "Rclone sync to $CLOUD_TARGET completed successfully."
+    log "Starting cloud sync."
+    if rclone sync $DESDIR $CLOUD_TARGET --progress; then
+        log "Rclone sync to $CLOUD_TARGET completed successfully."
+    else
+        log "Rclone sync failed."
+        exit 1
+    fi
 else
     log "Rclone not found; skipping cloud sync."
 fi
