@@ -1,4 +1,4 @@
-This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq) to include `etc/bpq32.cfg` (the location used by [Hibbian](https://www.hibbian.org)) and optionally sync the backups to cloud storage using Rclone, if you are not backing up to a mounted fileshare or external drive.
+This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq) to include `/etc/bpq32.cfg` (the location used by [Hibbian](https://www.hibbian.org)) and optionally sync the backups to cloud storage using Rclone, if you are not backing up to a mounted fileshare or external drive.
 
 ## Installation
 1. Clone this repository: `git clone https://github.com/sdhuk/RPi_linbpq_backup`

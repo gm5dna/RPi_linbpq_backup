@@ -5,7 +5,7 @@
 # to cloud storage (using rclone). It also ensures that the backup process is logged and 
 # that the BPQ service is properly stopped and restarted during the backup.
 
-# You will need to modify some of the variables (typically DESDIR and CLOUD_TARGET) to 
+# You may need to modify some of the variables (typically DESDIR and CLOUD_TARGET) to 
 # suit your personal circumstances.
 
 # Once set up, schedule the script to run daily using `crontab -e` and add a line similar 
