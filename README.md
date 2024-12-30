@@ -9,6 +9,8 @@ This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m
 6. Check is working properly `./RPi_linbpq_backup`
 7. [Set up a cron job](#scheduling-a-cron-job) for automated daily backups
 
+---
+
 ## Scheduling a Cron Job
 To schedule `~/RPi_linbpq_backup/RPi_linbpq_backup.sh` as a cron job to run every day at 1 AM, follow these steps:
 
@@ -19,8 +21,6 @@ To schedule `~/RPi_linbpq_backup/RPi_linbpq_backup.sh` as a cron job to run ever
    ```
 
 2. If this is your first time editing the crontab, you'll be prompted to select an editor. Choose one (e.g., nano).
-
----
 
 ### Step 2: Add the Cron Job
 In the crontab file, add the following line:
