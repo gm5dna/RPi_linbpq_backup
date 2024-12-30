@@ -1,4 +1,4 @@
-This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq).
+This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq) to include `etc/bpq32.cfg` and optionally sync the backups to cloud storage using Rclone if not backing up to a mounted fileshare or external drive.
 
 ## Installation
 1. Clone this repository: `git clone https://github.com/sdhuk/RPi_linbpq_backup`
@@ -6,7 +6,7 @@ This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m
 3. `cd RPi_linbpq_backup`
 4. `nano RPi_linbpq_backup` and modify the variables to suit your personal setup
 5. Ensure that the script is executable `chmod +x RPi_linbpq_backup`
-6. Check is working properly `./RPi_linbpq_backup`
+6. Check the script is working properly `./RPi_linbpq_backup`
 7. [Set up a cron job](#scheduling-a-cron-job) for automated daily backups
 
 ---
