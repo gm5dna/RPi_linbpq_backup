@@ -101,11 +101,26 @@ check_status "Configuring unattended-upgrades"
 
 # Step 10: Set Up Log2RAM
 echo "Setting up Log2RAM..."
-wget https://github.com/azlux/log2ram/archive/master.zip
-unzip master.zip
-cd log2ram-master
-chmod +x install.sh
-sudo ./install.sh
+
+# Download and unzip the log2ram repository
+wget -q https://github.com/azlux/log2ram/archive/master.zip -O /tmp/master.zip || { echo "Download failed"; exit 1; }
+
+# Unzip the file
+unzip -q /tmp/master.zip -d /tmp || { echo "Unzip failed"; exit 1; }
+
+# Change to the extracted directory
+cd /tmp/log2ram-master || { echo "Directory change failed"; exit 1; }
+
+# Make the install script executable
+chmod +x install.sh || { echo "chmod failed"; exit 1; }
+
+# Run the installation script
+sudo ./install.sh || { echo "Installation failed"; exit 1; }
+
+# Clean up
+rm -rf /tmp/master.zip /tmp/log2ram-master
+
+echo "Installation successful!"
 check_status "Log2RAM installation"
 
 # Verify Log2RAM installation
