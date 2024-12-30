@@ -1,4 +1,4 @@
-This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq) and updated to support `/etc/bpq32.cfg`, the configuration file location used by [Hibbian](https://www.hibbian.org). Additionally, it includes an optional feature to sync backups to cloud storage using Rclone, for users not backing up to a mounted fileshare or external drive.
+This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq) and updated to include `/etc/bpq32.cfg`, the configuration file location used by [Hibbian](https://www.hibbian.org). Additionally, it includes an optional feature to sync backups to cloud storage using Rclone, for users not backing up to a mounted fileshare or external drive.
 
 ## Features
 - Supports backing up `/etc/bpq32.cfg` used by Hibbian.
