@@ -6,7 +6,7 @@ This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m
 3. `cd RPi_linbpq_backup`
 4. `nano RPi_linbpq_backup` and modify the variables to suit your personal setup
 5. Ensure that the script is executable `chmod +x RPi_linbpq_backup`
-6. Test the script is working properly `./RPi_linbpq_backup`
+6. Check is working properly `./RPi_linbpq_backup`
 7. [Set up a cron job](#scheduling-a-cron-job) for automated daily backups
 
 ## Scheduling a Cron Job
