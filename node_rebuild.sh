@@ -41,18 +41,26 @@ echo "Installing LinBPQ..."
 sudo apt update && sudo apt install linbpq
 check_status "LinBPQ installation"
 
-# Step 5: Restore Backup (interactive filename prompt)
-echo "Please enter the filename of the backup archive (e.g., bpq_ddmmyy_hhmmss.tar.gz):"
-read backup_filename
+# Step 5: Download and Restore Backup (interactive web location prompt)
+echo "Please enter the URL to download the backup file from:"
+read backup_url
 
-# Check if the file exists
-if [ ! -f "$backup_filename" ]; then
-    echo "Error: Backup file '$backup_filename' not found. Exiting."
+# Download the backup file
+echo "Downloading backup file from $backup_url..."
+wget "$backup_url" -P /tmp
+check_status "Downloading backup file"
+
+# Extract the filename from the URL
+backup_filename=$(basename "$backup_url")
+
+# Check if the file exists after download
+if [ ! -f "/tmp/$backup_filename" ]; then
+    echo "Error: Backup file '$backup_filename' not found after download. Exiting."
     exit 1
 fi
 
 echo "Restoring backup from $backup_filename..."
-sudo tar -xf "$backup_filename" -C /
+sudo tar -xf "/tmp/$backup_filename" -C /
 check_status "Backup restoration"
 
 # Step 6: Update BPQ Config File Ownership
@@ -73,11 +81,6 @@ check_status "Setting up NinoTNC udev rules"
 echo "Configuring unattended-upgrades..."
 sudo dpkg-reconfigure --priority=low unattended-upgrades
 check_status "Configuring unattended-upgrades"
-
-# Step 9: Configure Raspberry Pi Settings
-echo "Configuring Raspberry Pi settings..."
-sudo raspi-config
-check_status "Raspberry Pi settings configuration"
 
 # Step 10: Set Up Log2RAM
 echo "Setting up Log2RAM..."
@@ -129,4 +132,18 @@ else
     echo ".bash_aliases already contains aliases, skipping..."
 fi
 
-echo "Setup complete!"
+# Step 9: Configure Raspberry Pi Settings
+echo "Configuring Raspberry Pi settings..."
+sudo raspi-config
+check_status "Raspberry Pi settings configuration"
+
+# Ask user if they want to reboot the system
+echo "Setup complete! Would you like to reboot the system now? (yes/no)"
+read reboot_choice
+
+if [ "$reboot_choice" == "yes" ]; then
+    echo "Rebooting the system..."
+    sudo reboot
+else
+    echo "Please remember to reboot the system later to apply all changes."
+fi
