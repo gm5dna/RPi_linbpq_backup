@@ -80,7 +80,23 @@ check_status "Setting up NinoTNC udev rules"
 
 # Step 8: Configure Unattended Updates
 echo "Configuring unattended-upgrades..."
-sudo dpkg-reconfigure --priority=low unattended-upgrades
+
+# Enable unattended-upgrades by configuring it
+sudo dpkg-reconfigure -f noninteractive unattended-upgrades
+
+# Ensure that the service is enabled and started
+sudo systemctl enable unattended-upgrades
+sudo systemctl start unattended-upgrades
+
+# Make sure automatic updates are enabled by checking the config file
+sudo bash -c 'echo "Unattended-Upgrade::Automatic-Reboot \"true\";" >> /etc/apt/apt.conf.d/50unattended-upgrades'
+sudo bash -c 'echo "APT::Periodic::Update-Package-Lists \"1\";" >> /etc/apt/apt.conf.d/10periodic'
+sudo bash -c 'echo "APT::Periodic::Download-Upgradeable-Packages \"1\";" >> /etc/apt/apt.conf.d/10periodic'
+sudo bash -c 'echo "APT::Periodic::AutocleanInterval \"7\";" >> /etc/apt/apt.conf.d/10periodic'
+sudo bash -c 'echo "APT::Periodic::Unattended-Upgrade \"1\";" >> /etc/apt/apt.conf.d/10periodic'
+
+echo "Unattended Upgrades have been enabled."
+
 check_status "Configuring unattended-upgrades"
 
 # Step 10: Set Up Log2RAM
