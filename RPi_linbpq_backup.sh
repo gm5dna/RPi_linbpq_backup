@@ -43,7 +43,7 @@ fi
 
 # Create the backup
 log "Creating backup."
-sudo tar --exclude='*.sock' -caf $DESDIR/$FILE $SRCDIR $BPQCFG || { log "Backup failed."; exit 1; }
+sudo tar --exclude='*.sock' -czf $DESDIR/$FILE $SRCDIR $BPQCFG || { log "Backup failed."; exit 1; }
 
 # Retain only the last $RETENTION_COUNT backups
 log "Deleting old backups, keeping the last $RETENTION_COUNT."
