@@ -123,11 +123,6 @@ rm -rf /tmp/master.zip /tmp/log2ram-master
 echo "Installation successful!"
 check_status "Log2RAM installation"
 
-# Verify Log2RAM installation
-echo "Verifying Log2RAM installation..."
-systemctl status log2ram
-check_status "Log2RAM verification"
-
 # Step 11: Set Up Raspberry Pi Watchdog
 echo "Setting up Raspberry Pi watchdog..."
 echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
@@ -163,11 +158,6 @@ EOL
 else
     echo ".bash_aliases already contains aliases, skipping..."
 fi
-
-# Step 9: Configure Raspberry Pi Settings
-echo "Configuring Raspberry Pi settings..."
-sudo raspi-config
-check_status "Raspberry Pi settings configuration"
 
 # Ask user if they want to reboot the system
 echo "Setup complete! Would you like to reboot the system now? (yes/no)"
