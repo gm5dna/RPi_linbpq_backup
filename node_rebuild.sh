@@ -159,13 +159,4 @@ else
     echo ".bash_aliases already contains aliases, skipping..."
 fi
 
-# Ask user if they want to reboot the system
-echo "Setup complete! Would you like to reboot the system now? (yes/no)"
-read reboot_choice
-
-if [ "$reboot_choice" == "yes" ]; then
-    echo "Rebooting the system..."
-    sudo reboot
-else
     echo "Please remember to reboot the system later to apply all changes."
-fi
