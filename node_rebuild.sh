@@ -60,7 +60,8 @@ if [ ! -f "/tmp/$backup_filename" ]; then
 fi
 
 echo "Restoring backup from $backup_filename..."
-sudo tar -xf "/tmp/$backup_filename" -C /
+# Updated tar command for .tar.gz file extraction
+sudo tar -xzf "/tmp/$backup_filename" -C /
 check_status "Backup restoration"
 
 # Step 6: Update BPQ Config File Ownership
