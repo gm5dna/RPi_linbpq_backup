@@ -1,6 +1,13 @@
-This helpful script was written by [Robin M0JQQ](https://github.com/m0jqq). I've adapted it so that the archives include `bpq32.cfg`, which is stored in `etc/` in [Hibby's repository](https://www.hibbian.org).
+This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m0jqq).
 
-If you're using [Hibby's repository](https://www.hibbian.org), then you probably only need to edit one variable in the script, `DESDIR=`, which is the destination directory for the backups. This should ideally be fileshare on another machine. Alternatively, you could use [Rclone](https://rclone.org) to save your backups to cloud storage.
+## Installation
+1. Clone this repository: `git clone https://github.com/sdhuk/RPi_linbpq_backup`
+2. Optional: [Set up Rclone](Rclone setup instructions.md)
+3. `cd RPi_linbpq_backup`
+4. `nano RPi_linbpq_backup` and modify the variable to suit your personal setup
+5. Ensure that the script is executable `chmod +x RPi_linbpq_backup`
+6. Test the script is working properly `./RPi_linbpq_backup`
+7. [Set up a cron job](#scheduling-a-cron-job) for automated daily backups
 
 ## Scheduling a Cron Job
 To schedule `~/RPi_linbpq_backup/RPi_linbpq_backup.sh` as a cron job to run every day at 1 AM, follow these steps:
@@ -26,36 +33,3 @@ Explanation of the schedule:
 - `0 1 * * *`: Specifies that the job runs at 1:00 AM every day.
 - `/bin/bash`: Ensures the script runs using the Bash shell.
 - `~/RPi_linbpq_backup/RPi_linbpq_backup.sh`: The path to your script.
-
----
-
-### Step 3: Ensure the Script Is Executable
-Make sure the script has executable permissions:
-
-```bash
-chmod +x ~/RPi_linbpq_backup/RPi_linbpq_backup.sh
-```
-
----
-
-### Step 4: Verify the Cron Job
-List your current cron jobs to verify the addition:
-
-```bash
-crontab -l
-```
-
----
-
-### Step 5: Test the Script
-To confirm it works as intended, run the script manually:
-
-```bash
-/bin/bash ~/RPi_linbpq_backup/RPi_linbpq_backup.sh
-```
-
-Check the output to ensure there are no errors.
-
----
-
-You're all set! The script will now run daily at 1 AM.
