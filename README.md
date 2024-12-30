@@ -2,7 +2,7 @@ This script was adapted from a helpful one by [Robin M0JQQ](https://github.com/m
 
 ## Installation
 1. Clone this repository: `git clone https://github.com/sdhuk/RPi_linbpq_backup`
-2. Optional: [Set up Rclone](Rclone setup instructions.md)
+2. Optional: [Set up Rclone](/Rclone%20setup%20instructions.md)
 3. `cd RPi_linbpq_backup`
 4. `nano RPi_linbpq_backup` and modify the variable to suit your personal setup
 5. Ensure that the script is executable `chmod +x RPi_linbpq_backup`
