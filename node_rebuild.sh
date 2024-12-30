@@ -24,7 +24,7 @@ check_status "System update"
 # Step 2: Install Additional Packages
 echo "Installing additional packages..."
 sudo apt install -y tmux screenfetch htop ntpdate sntp unattended-upgrades \
-    rsync lsb-release curl python3-pip speedtest-cli iperf3 git python3-serial
+    rsync lsb-release curl python3-pip speedtest-cli git python3-serial
 check_status "Package installation"
 
 # Step 3: Set Up Hibbian
