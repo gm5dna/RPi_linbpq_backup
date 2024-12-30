@@ -18,12 +18,12 @@ check_status() {
 
 # Step 1: Perform System Updates
 echo "Updating system..."
-sudo apt update -y && sudo apt dist-upgrade -y && sudo apt autoremove -y
+sudo apt-get update -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y
 check_status "System update"
 
 # Step 2: Install Additional Packages
 echo "Installing additional packages..."
-sudo apt install -y tmux screenfetch htop ntpdate sntp unattended-upgrades \
+sudo apt-get install -y tmux screenfetch htop ntpdate sntp unattended-upgrades \
     rsync lsb-release curl python3-pip speedtest-cli git python3-serial
 check_status "Package installation"
 
@@ -38,7 +38,7 @@ check_status "Running Hibbian setup"
 
 # Step 4: Install LinBPQ
 echo "Installing LinBPQ..."
-sudo apt update && sudo apt install linbpq
+sudo apt-get update && sudo apt-get install linbpq
 check_status "LinBPQ installation"
 
 # Step 5: Download and Restore Backup (interactive web location prompt)
@@ -103,7 +103,7 @@ sudo reboot
 sleep 5
 
 echo "Installing watchdog software..."
-sudo apt install watchdog
+sudo apt-get install watchdog
 sudo systemctl enable watchdog
 check_status "Watchdog installation"
 
@@ -118,7 +118,7 @@ if ! grep -q "alias c=" ~/.bash_aliases; then
     cat <<EOL >> ~/.bash_aliases
 alias c='clear'
 alias ping8='ping 8.8.8.8'
-alias update='sudo apt update -y && sudo apt dist-upgrade -y && sudo apt autoremove -y'
+alias update='sudo apt-get update -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y'
 alias temp='vcgencmd measure_temp'
 alias ll='ls -l'
 alias la='ls -A'
