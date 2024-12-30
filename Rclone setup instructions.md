@@ -1,8 +1,10 @@
-## **Setting Up Rclone on Debian to Sync `~/bpq-backup` to OneDrive `/Backups/LinBPQ`**
+## **Setting Up Rclone to Sync `~/bpq-backup` to OneDrive `/Backups/LinBPQ`**
+
+Although this guide is for OneDrive, the steps can be adapted for most cloud storage providers.
 
 ### **1. Install Rclone**
 
-First, install Rclone on your Debian system (for both headless and interactive setups):
+First, install Rclone on your system:
 
 ```bash
 sudo apt update
